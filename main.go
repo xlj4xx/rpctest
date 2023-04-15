@@ -28,7 +28,7 @@ func main() {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	headers := []string{"RPC Name", "Speed", "ETH Balance"}
+	headers := []string{"ChainNode", "QuickNode", "Alchemy"}
 	writer.Write(headers)
 
 	for i := 0; i < 10; i++ {
@@ -36,12 +36,21 @@ func main() {
 		quickTime := requestRpc(url_quicknode, "quicknode")
 		alchTime := requestRpc(url_alchemy, "alchemy")
 
-		row1 := []string{"chainnode", chainTime}
-		writer.Write(row1)
-		row2 := []string{"quicknode", quickTime}
-		writer.Write(row2)
-		row3 := []string{"alchemy", alchTime}
-		writer.Write(row3)
+		// create slices for each request with all three times
+		row := []string{chainTime, quickTime, alchTime}
+
+		// write the row to the CSV file
+		err := writer.Write(row)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// col1 := []string{chainTime}
+		// writer.Write(col1)
+		// col2 := []string{quickTime}
+		// writer.Write(col2)
+		// col3 := []string{alchTime}
+		// writer.Write(col3)
 		// time.Sleep(1 * time.Second)
 
 	}
