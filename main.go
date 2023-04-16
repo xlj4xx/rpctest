@@ -46,52 +46,14 @@ func main() {
 		getblockTime := requestRpc(url_getblock, "getblock")
 		llamarpcTime := requestRpc(url_llamrpc, "llamarpc")
 
-		// create slices for each request with all three times
 		row := []string{chainTime, quickTime, alchTime, publicTime, infuraTime, ankrTime, getblockTime, llamarpcTime}
-
-		// write the row to the CSV file
 		err := writer.Write(row)
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		// col1 := []string{chainTime}
-		// writer.Write(col1)
-		// col2 := []string{quickTime}
-		// writer.Write(col2)
-		// col3 := []string{alchTime}
-		// writer.Write(col3)
-		// time.Sleep(1 * time.Second)
 
 	}
 	time.Sleep(30 * time.Second)
-	for i := 0; i < 60; i++ {
-		chainTime := requestRpc(url_chainnode, "chainnode")
-		quickTime := requestRpc(url_quicknode, "quicknode")
-		alchTime := requestRpc(url_alchemy, "alchemy")
-		publicTime := requestRpc(url_publicnode, "publicnode")
-		infuraTime := requestRpc(url_infura, "infura")
-		ankrTime := requestRpc(url_ankr, "ankr")
-		getblockTime := requestRpc(url_getblock, "getblock")
-
-		// create slices for each request with all three times
-		row := []string{chainTime, quickTime, alchTime, publicTime, infuraTime, ankrTime, getblockTime}
-
-		// write the row to the CSV file
-		err := writer.Write(row)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// col1 := []string{chainTime}
-		// writer.Write(col1)
-		// col2 := []string{quickTime}
-		// writer.Write(col2)
-		// col3 := []string{alchTime}
-		// writer.Write(col3)
-		// time.Sleep(1 * time.Second)
-
-	}
 
 }
 
