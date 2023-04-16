@@ -18,6 +18,11 @@ func main() {
 	url_alchemy := "https://eth-mainnet.g.alchemy.com/v2/OEhsfiW248rLojHL9hJ1ivPIKo8dryFQ"
 	url_quicknode := "https://snowy-wild-road.discover.quiknode.pro/df8aea5d494de1cf8dcfc7204601f86d2c360e36/"
 	url_chainnode := "https://mainnet.chainnodes.org/1840bd6e-0b4c-4aaa-9772-e1b15c4f29ab"
+	url_publicnode := "https://ethereum.publicnode.com"
+	url_infura := "https://mainnet.infura.io/v3/3d0a11b556534ec5a6b352e0bf6290e4"
+	url_ankr := "https://rpc.ankr.com/eth"
+	url_getblock := "https://eth.getblock.io/c7a50bce-a52f-4c96-9beb-1ba5cc13dc32/mainnet/"
+	url_llamrpc := "https://eth.llamarpc.com"
 
 	file, err := os.Create("rpc_speed.csv")
 	if err != nil {
@@ -28,16 +33,49 @@ func main() {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	headers := []string{"ChainNode", "QuickNode", "Alchemy"}
+	headers := []string{"ChainNode", "QuickNode", "Alchemy", "PublicNode", "Infura", "Ankr", "GetBlock", "LlamaRPC"}
 	writer.Write(headers)
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 60; i++ {
 		chainTime := requestRpc(url_chainnode, "chainnode")
 		quickTime := requestRpc(url_quicknode, "quicknode")
 		alchTime := requestRpc(url_alchemy, "alchemy")
+		publicTime := requestRpc(url_publicnode, "publicnode")
+		infuraTime := requestRpc(url_infura, "infura")
+		ankrTime := requestRpc(url_ankr, "ankr")
+		getblockTime := requestRpc(url_getblock, "getblock")
+		llamarpcTime := requestRpc(url_llamrpc, "llamarpc")
 
 		// create slices for each request with all three times
-		row := []string{chainTime, quickTime, alchTime}
+		row := []string{chainTime, quickTime, alchTime, publicTime, infuraTime, ankrTime, getblockTime, llamarpcTime}
+
+		// write the row to the CSV file
+		err := writer.Write(row)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// col1 := []string{chainTime}
+		// writer.Write(col1)
+		// col2 := []string{quickTime}
+		// writer.Write(col2)
+		// col3 := []string{alchTime}
+		// writer.Write(col3)
+		// time.Sleep(1 * time.Second)
+
+	}
+	time.Sleep(30 * time.Second)
+	for i := 0; i < 60; i++ {
+		chainTime := requestRpc(url_chainnode, "chainnode")
+		quickTime := requestRpc(url_quicknode, "quicknode")
+		alchTime := requestRpc(url_alchemy, "alchemy")
+		publicTime := requestRpc(url_publicnode, "publicnode")
+		infuraTime := requestRpc(url_infura, "infura")
+		ankrTime := requestRpc(url_ankr, "ankr")
+		getblockTime := requestRpc(url_getblock, "getblock")
+
+		// create slices for each request with all three times
+		row := []string{chainTime, quickTime, alchTime, publicTime, infuraTime, ankrTime, getblockTime}
 
 		// write the row to the CSV file
 		err := writer.Write(row)
